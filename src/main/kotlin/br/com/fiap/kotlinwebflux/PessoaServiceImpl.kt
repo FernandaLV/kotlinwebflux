@@ -7,7 +7,8 @@ import java.time.Duration
 
 @Service
 class PessoaServiceImpl constructor(
-        private val repository: PessoaRepository
+        private val repository: PessoaRepository,
+        private val configProperties: ConfigProperties
 ): PessoaService{
 
     override fun save(pessoaDTO: PessoaDTO): Mono<PessoaDTO> = Mono.just(pessoaDTO)
@@ -16,7 +17,7 @@ class PessoaServiceImpl constructor(
             .map { PessoaDTO(nome = it.nome) }
 
     override fun findAll(): Flux<PessoaDTO> = repository.findAll()
-            .map{ PessoaDTO(nome = it.nome) }
+            .map{ PessoaDTO(nome = "${configProperties.remoteFile} ${it.nome}") }
             .delayElements(Duration.ofSeconds(1))
 
 }

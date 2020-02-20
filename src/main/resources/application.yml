@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: webflux
+  profiles:
+    active: master
+  cloud:
+    uri: http://localhost:8888
